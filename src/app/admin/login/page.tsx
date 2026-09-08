@@ -114,12 +114,6 @@ export default function AdminLoginPage() {
               )}
             </button>
           </form>
-
-          <div className="mt-6 p-3 rounded-xl bg-white/5 border border-white/5 text-[11px] text-gray-400 space-y-1">
-            <p className="font-semibold text-gray-300">Default Seed Credentials:</p>
-            <p>Admin: <code className="text-brand-300">admin@melodypass.com</code> / <code className="text-brand-300">AdminPass123!</code></p>
-            <p>Support: <code className="text-brand-300">support@melodypass.com</code> / <code className="text-brand-300">SupportPass123!</code></p>
-          </div>
         </div>
 
         <div className="text-center mt-6">

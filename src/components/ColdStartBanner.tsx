@@ -8,10 +8,14 @@ export function ColdStartBanner() {
   const [isSlow, setIsSlow] = useState(false);
 
   useEffect(() => {
-    return subscribeColdStart((slow) => {
-      setIsSlow(slow);
-    });
-  }, []);
+  const cleanup = subscribeColdStart((slow) => {
+    setIsSlow(slow);
+  });
+
+  return () => {
+    cleanup();
+  };
+}, []);
 
   if (!isSlow) return null;
 
