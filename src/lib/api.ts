@@ -18,8 +18,9 @@ export async function apiFetch<T = any>(
 ): Promise<T> {
   const url = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${endpoint}`;
 
-  // Get local sessionToken fallback
+  // Get local sessionToken and adminToken fallback
   const storedSessionToken = typeof window !== 'undefined' ? localStorage.getItem('melodypass_session_token') : null;
+  const storedAdminToken = typeof window !== 'undefined' ? localStorage.getItem('melodypass_admin_token') : null;
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -28,6 +29,10 @@ export async function apiFetch<T = any>(
 
   if (storedSessionToken && !headers['x-session-token']) {
     headers['x-session-token'] = storedSessionToken;
+  }
+
+  if (storedAdminToken && !headers['Authorization'] && !headers['authorization']) {
+    headers['Authorization'] = `Bearer ${storedAdminToken}`;
   }
 
   // Cold start timer (3 seconds threshold)
