@@ -28,37 +28,39 @@ export default function HomePage() {
           <span>Physical Pass to Digital Album</span>
         </div>
 
-        {/* Mobile-First Physical CD & Album Sleeve Presentation */}
-        <div className="relative w-[280px] sm:w-[320px] h-[190px] sm:h-[210px] my-6 select-none">
-          {/* Spinning CD Disc - Sits on the right, partially peeking out */}
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-40 h-40 sm:w-44 sm:h-44 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.8)] border-2 border-neutral-700/80 z-10 animate-spin-slow overflow-hidden flex items-center justify-center">
+        {/* Mobile-First Physical CD & Album Sleeve Presentation (50% in, 50% out) */}
+        <div className="relative w-[270px] sm:w-[290px] h-[180px] sm:h-[190px] my-6 select-none mx-auto">
+          {/* Rotating CD Disc - Exactly 50% inside the rectangle (behind it), 50% outside */}
+          <div className="absolute left-[90px] sm:left-[95px] top-0 w-[180px] h-[180px] sm:w-[190px] sm:h-[190px] rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.8)] border-2 border-neutral-700/90 z-10 animate-spin-slow overflow-hidden flex items-center justify-center">
             {/* CD Disc Face Image */}
             <img
               src="/cd-art.jpg"
               alt="CD Album Disc"
               className="absolute inset-0 w-full h-full object-cover"
             />
-            {/* Vinyl grooves & sheen overlay */}
-            <div className="absolute inset-0 rounded-full border-[6px] border-black/40 pointer-events-none" />
-            <div className="absolute inset-0 rounded-full border-[12px] border-white/5 pointer-events-none" />
-            {/* Center Spindle Hole */}
-            <div className="relative z-20 w-12 h-12 rounded-full bg-neutral-950 border-4 border-neutral-800 shadow-inner flex items-center justify-center backdrop-blur-md">
-              <div className="w-4 h-4 rounded-full bg-[#0a0a0f] border border-white/20" />
+            {/* Realistic vinyl groove rings & light sheen */}
+            <div className="absolute inset-0 rounded-full border-[8px] border-black/35 pointer-events-none" />
+            <div className="absolute inset-0 rounded-full border-[18px] border-white/5 pointer-events-none" />
+            <div className="absolute inset-0 rounded-full border border-white/20 pointer-events-none" />
+            
+            {/* Center Spindle Ring and Transparent Hole */}
+            <div className="relative z-20 w-14 h-14 rounded-full bg-neutral-950/90 border-4 border-neutral-800 shadow-inner flex items-center justify-center backdrop-blur-md">
+              <div className="w-5 h-5 rounded-full bg-[#0a0a0f] border-2 border-white/30 shadow-inner" />
             </div>
           </div>
 
-          {/* Album Cover Sleeve - Sits on the left with prominent shadow */}
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-40 h-40 sm:w-44 sm:h-44 rounded-2xl overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.9)] border border-white/20 z-20 transition-transform active:scale-95 duration-200">
+          {/* Album Cover Rectangle Sleeve - Anchored on the left */}
+          <div className="absolute left-0 top-0 w-[180px] h-[180px] sm:w-[190px] sm:h-[190px] rounded-2xl overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.95)] border border-white/20 z-20 transition-transform duration-200">
             <img
               src="/album-cover.jpg"
               alt="Album Cover - Abener Tagesse"
               className="w-full h-full object-cover"
             />
-            {/* Realistic light sheen on sleeve edge */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/10 pointer-events-none" />
-            {/* Small badge */}
+            {/* Light reflection gradient on sleeve edge */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-black/25 via-transparent to-white/10 pointer-events-none" />
+            {/* Official Pass Badge */}
             <div className="absolute bottom-2 left-2 right-2">
-              <span className="inline-block text-[9px] font-mono tracking-widest text-white uppercase bg-black/75 backdrop-blur-md px-2 py-0.5 rounded-md border border-white/15">
+              <span className="inline-block text-[9px] font-mono tracking-widest text-white uppercase bg-black/80 backdrop-blur-md px-2 py-0.5 rounded-md border border-white/15 shadow-sm">
                 OFFICIAL PASS
               </span>
             </div>
