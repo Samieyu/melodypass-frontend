@@ -18,9 +18,21 @@ export function AccessCodeForm() {
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [cachedAlbumId, setCachedAlbumId] = useState<string | null>(null);
 
-  // Pre-fill code if present in URL query string (e.g. from scanned QR code)
+  // Check cached session on mount and prefill
   useEffect(() => {
+    const savedToken = localStorage.getItem('melodypass_session_token');
+    const savedAlbumId = localStorage.getItem('melodypass_album_id');
+    const savedName = localStorage.getItem('melodypass_user_name');
+    const savedPhone = localStorage.getItem('melodypass_user_phone');
+
+    if (savedName) setName(savedName);
+    if (savedPhone) setPhone(savedPhone);
+    if (savedToken && savedAlbumId) {
+      setCachedAlbumId(savedAlbumId);
+    }
+
     if (initialCodeFromUrl && initialCodeFromUrl.length === 6) {
       const chars = initialCodeFromUrl.toUpperCase().split('');
       setCodeDigits(chars);
@@ -103,8 +115,13 @@ export function AccessCodeForm() {
       if (res.sessionToken) {
         localStorage.setItem('melodypass_session_token', res.sessionToken);
       }
+      if (res.albumId) {
+        localStorage.setItem('melodypass_album_id', res.albumId);
+      }
+      localStorage.setItem('melodypass_user_name', name.trim());
+      localStorage.setItem('melodypass_user_phone', phone.trim());
 
-      setSuccessMsg(res.message || 'Access granted! Redirecting to album...');
+      setSuccessMsg(res.message || 'Access granted! Redirecting to video...');
       
       setTimeout(() => {
         router.push(`/album/${res.albumId}`);
@@ -118,6 +135,30 @@ export function AccessCodeForm() {
 
   return (
     <form onSubmit={handleSubmit} className="w-full space-y-6">
+      {/* Cached Session Quick Resume Card */}
+      {cachedAlbumId && (
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/20 via-brand-500/20 to-purple-500/20 border border-emerald-500/30 text-white space-y-3 shadow-lg">
+          <div className="flex items-center gap-2 text-emerald-300 font-bold text-sm">
+            <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+            <span>Device Already Verified!</span>
+          </div>
+          <p className="text-xs text-gray-300 leading-relaxed">
+            You already unlocked <strong className="text-white">ንካኝ ዛሬ</strong> on this device. You can jump directly to the video without entering your code again.
+          </p>
+          <button
+            type="button"
+            onClick={() => router.push(`/album/${cachedAlbumId}`)}
+            className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-brand-600 to-accent-violet hover:opacity-95 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-transform"
+          >
+            <span>▶ Resume Watching Video</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+          <div className="text-center pt-1">
+            <span className="text-[11px] text-gray-400">Or enter a different code below</span>
+          </div>
+        </div>
+      )}
+
       {/* Error Alert */}
       {error && (
         <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-sm flex items-start gap-3 animate-shake">

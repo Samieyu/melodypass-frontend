@@ -1,10 +1,19 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Disc3, KeyRound, QrCode, Music2, ShieldCheck, Sparkles, ChevronRight } from 'lucide-react';
 
 export default function HomePage() {
+  const [savedSession, setSavedSession] = useState<{ albumId: string } | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('melodypass_session_token');
+    const albumId = localStorage.getItem('melodypass_album_id');
+    if (token && albumId) {
+      setSavedSession({ albumId });
+    }
+  }, []);
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center p-4 overflow-hidden">
       {/* Dynamic Background Effects */}
@@ -19,65 +28,86 @@ export default function HomePage() {
           <span>Physical Pass to Digital Album</span>
         </div>
 
-        {/* Hero Graphic - Vinyl Album */}
-        <div className="relative w-72 h-72 mb-8 group">
-          {/* Vinyl Disc Behind */}
-          <div className="absolute inset-0 bg-neutral-900 rounded-full border-4 border-neutral-800 shadow-2xl flex items-center justify-center animate-spin-slow group-hover:scale-105 transition-transform duration-500 overflow-hidden">
-            {/* CD image background */}
+        {/* Mobile-First Physical CD & Album Sleeve Presentation */}
+        <div className="relative w-[280px] sm:w-[320px] h-[190px] sm:h-[210px] my-6 select-none">
+          {/* Spinning CD Disc - Sits on the right, partially peeking out */}
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-40 h-40 sm:w-44 sm:h-44 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.8)] border-2 border-neutral-700/80 z-10 animate-spin-slow overflow-hidden flex items-center justify-center">
+            {/* CD Disc Face Image */}
             <img
               src="/cd-art.jpg"
-              alt="CD Album Art"
-              className="absolute inset-0 w-full h-full object-cover opacity-90 rounded-full"
+              alt="CD Album Disc"
+              className="absolute inset-0 w-full h-full object-cover"
             />
-            {/* Center spindle hole */}
-            <div className="relative z-10 w-16 h-16 rounded-full border-4 border-neutral-900/90 bg-neutral-950 flex items-center justify-center backdrop-blur-sm shadow-inner">
-              <div className="w-5 h-5 rounded-full bg-neutral-900 border border-white/20" />
+            {/* Vinyl grooves & sheen overlay */}
+            <div className="absolute inset-0 rounded-full border-[6px] border-black/40 pointer-events-none" />
+            <div className="absolute inset-0 rounded-full border-[12px] border-white/5 pointer-events-none" />
+            {/* Center Spindle Hole */}
+            <div className="relative z-20 w-12 h-12 rounded-full bg-neutral-950 border-4 border-neutral-800 shadow-inner flex items-center justify-center backdrop-blur-md">
+              <div className="w-4 h-4 rounded-full bg-[#0a0a0f] border border-white/20" />
             </div>
-            <div className="absolute inset-0 rounded-full border-2 border-white/20 pointer-events-none" />
           </div>
 
-          {/* Album Cover Sleeve */}
-          <div className="absolute inset-y-0 left-0 w-52 rounded-2xl glass-card overflow-hidden shadow-2xl border border-white/10 flex flex-col justify-between p-4 group-hover:-translate-x-6 transition-transform duration-500 relative">
+          {/* Album Cover Sleeve - Sits on the left with prominent shadow */}
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-40 h-40 sm:w-44 sm:h-44 rounded-2xl overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.9)] border border-white/20 z-20 transition-transform active:scale-95 duration-200">
             <img
               src="/album-cover.jpg"
               alt="Album Cover - Abener Tagesse"
-              className="absolute inset-0 w-full h-full object-cover"
+              className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/60 pointer-events-none" />
-            
-            <div className="relative z-10 flex justify-between items-start">
-              <Disc3 className="w-6 h-6 text-brand-400" />
-              <span className="text-[10px] font-mono tracking-widest text-gray-200 uppercase bg-black/60 px-2 py-0.5 rounded-full backdrop-blur-sm border border-white/10">
+            {/* Realistic light sheen on sleeve edge */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/10 pointer-events-none" />
+            {/* Small badge */}
+            <div className="absolute bottom-2 left-2 right-2">
+              <span className="inline-block text-[9px] font-mono tracking-widest text-white uppercase bg-black/75 backdrop-blur-md px-2 py-0.5 rounded-md border border-white/15">
                 OFFICIAL PASS
               </span>
-            </div>
-            
-            <div className="relative z-10 text-left">
-              <p className="text-[11px] uppercase font-bold text-accent-cyan tracking-wider drop-shadow">NEW GOSPEL VIDEO</p>
-              <h2 className="text-xl font-extrabold text-white leading-tight drop-shadow-md">ንካኝ ዛሬ</h2>
-              <p className="text-xs text-gray-200 drop-shadow font-medium">by Abener Tagesse</p>
             </div>
           </div>
         </div>
 
-        {/* Title & Tagline */}
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
-          QR Song <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-accent-violet to-accent-cyan">Access</span>
-        </h1>
-        <p className="text-sm text-gray-400 max-w-xs mb-8">
-          Enter your 6-character pass code to unlock full album playback permanently on this device.
+        {/* Song & Artist Title */}
+        <div className="mb-3">
+          <p className="text-[11px] uppercase font-bold text-accent-cyan tracking-widest">NEW GOSPEL MUSIC VIDEO</p>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-1">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-accent-violet to-accent-cyan">ንካኝ ዛሬ</span>
+          </h1>
+          <p className="text-sm font-semibold text-gray-300 mt-0.5">Singer Abener Tagesse</p>
+        </div>
+        <p className="text-xs text-gray-400 max-w-xs mb-6">
+          {savedSession
+            ? 'Your device is authenticated! Click below to resume your video immediately.'
+            : 'Enter your 6-character pass code to unlock the full official video permanently on this device.'}
         </p>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons - Smart Caching System */}
         <div className="w-full space-y-3 mb-8">
-          <Link
-            href="/access"
-            className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-brand-600 via-accent-violet to-brand-500 hover:opacity-95 text-white font-bold text-base shadow-lg shadow-brand-500/25 flex items-center justify-center gap-3 group transition-all duration-200 active:scale-[0.98]"
-          >
-            <KeyRound className="w-5 h-5 text-accent-cyan group-hover:rotate-12 transition-transform" />
-            <span>Enter Access Code</span>
-            <ChevronRight className="w-5 h-5 ml-auto text-white/70 group-hover:translate-x-1 transition-transform" />
-          </Link>
+          {savedSession ? (
+            <>
+              <Link
+                href={`/album/${savedSession.albumId}`}
+                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-brand-600 to-accent-violet hover:opacity-95 text-white font-extrabold text-base shadow-xl shadow-brand-500/30 flex items-center justify-center gap-3 group transition-all duration-200 active:scale-[0.98] border border-white/20"
+              >
+                <Sparkles className="w-5 h-5 text-accent-cyan animate-pulse" />
+                <span>Continue Watching ንካኝ ዛሬ</span>
+                <ChevronRight className="w-5 h-5 ml-auto text-white/70 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href="/access"
+                className="inline-block text-xs text-gray-400 hover:text-white transition-colors underline underline-offset-4 pt-1"
+              >
+                Enter a different code
+              </Link>
+            </>
+          ) : (
+            <Link
+              href="/access"
+              className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-brand-600 via-accent-violet to-brand-500 hover:opacity-95 text-white font-bold text-base shadow-lg shadow-brand-500/25 flex items-center justify-center gap-3 group transition-all duration-200 active:scale-[0.98]"
+            >
+              <KeyRound className="w-5 h-5 text-accent-cyan group-hover:rotate-12 transition-transform" />
+              <span>Enter Access Code</span>
+              <ChevronRight className="w-5 h-5 ml-auto text-white/70 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          )}
         </div>
 
         {/* Value Props */}

@@ -20,7 +20,7 @@ export default function RootLayout({
         <ColdStartBanner />
         <main className="flex-1 flex flex-col">{children}</main>
         <footer className="py-6 text-center text-xs text-gray-500 border-t border-white/5">
-          <p>© {new Date().getFullYear()} QR Album Access (MelodyPass). Powered by Cloudflare R2 & Neon.</p>
+          <p>© {new Date().getFullYear()} QR Song Access (ንካኝ ዛሬ). Powered by Samuel Woldemeskel.</p>
         </footer>
       </body>
     </html>

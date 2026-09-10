@@ -28,7 +28,7 @@ export default function AccessPage() {
               <KeyRound className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-xl font-extrabold text-white">Activate Album Pass</h1>
+              <h1 className="text-xl font-extrabold text-white">Activate Song Pass</h1>
               <p className="text-xs text-gray-400">Claim permanent access on this device</p>
             </div>
           </div>

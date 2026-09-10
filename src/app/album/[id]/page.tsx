@@ -45,7 +45,7 @@ export default function AlbumPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4">
         <Loader2 className="w-10 h-10 text-brand-400 animate-spin mb-4" />
-        <p className="text-sm font-medium text-gray-400">Verifying session & loading music album...</p>
+        <p className="text-sm font-medium text-gray-400">Verifying session & loading music video...</p>
       </div>
     );
   }
