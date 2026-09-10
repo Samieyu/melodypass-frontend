@@ -9,9 +9,11 @@ import {
   Volume2,
   VolumeX,
   Music,
+  Video,
   Loader2,
   Lock,
   Sparkles,
+  Maximize2,
 } from 'lucide-react';
 import { apiFetch } from '@/lib/api';
 
@@ -41,42 +43,21 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
   const [loadingStreamUrl, setLoadingStreamUrl] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
-  const [volume, setVolume] = useState<number>(0.8);
+  const [volume, setVolume] = useState<number>(0.9);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [streamError, setStreamError] = useState<string | null>(null);
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const mediaRef = useRef<HTMLVideoElement | null>(null);
   const currentSong = album.songs[currentTrackIndex];
 
-  // Initialize audio element
+  // Sync volume
   useEffect(() => {
-    const audio = new Audio();
-    audioRef.current = audio;
-
-    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
-    const handleLoadedMetadata = () => setDuration(audio.duration);
-    const handleEnded = () => handleNext();
-
-    audio.addEventListener('timeupdate', handleTimeUpdate);
-    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
-    audio.addEventListener('ended', handleEnded);
-
-    return () => {
-      audio.pause();
-      audio.removeEventListener('timeupdate', handleTimeUpdate);
-      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      audio.removeEventListener('ended', handleEnded);
-    };
-  }, []);
-
-  // Update volume
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = isMuted ? 0 : volume;
+    if (mediaRef.current) {
+      mediaRef.current.volume = isMuted ? 0 : volume;
     }
   }, [volume, isMuted]);
 
-  // Fetch presigned URL dynamically right before playback starts
+  // Fetch stream URL dynamically right before playback starts
   const playTrack = async (index: number) => {
     const song = album.songs[index];
     if (!song) return;
@@ -86,17 +67,17 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
     setLoadingStreamUrl(true);
 
     try {
-      // Fetch fresh signed streaming URL from API
+      // Fetch stream URL (either signed R2 or direct URL)
       const res = await apiFetch<{ streamUrl: string }>(`/songs/${song.id}/stream-url`);
       
-      if (audioRef.current) {
-        audioRef.current.src = res.streamUrl;
-        await audioRef.current.play();
+      if (mediaRef.current) {
+        mediaRef.current.src = res.streamUrl;
+        await mediaRef.current.play();
         setIsPlaying(true);
       }
     } catch (err: any) {
       console.error('Playback stream error:', err);
-      setStreamError(err.message || 'Failed to stream track');
+      setStreamError(err.message || 'Failed to stream media');
       setIsPlaying(false);
     } finally {
       setLoadingStreamUrl(false);
@@ -104,19 +85,22 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
   };
 
   const togglePlayPause = () => {
-    if (!audioRef.current) return;
+    if (!mediaRef.current) return;
 
     if (isPlaying) {
-      audioRef.current.pause();
+      mediaRef.current.pause();
       setIsPlaying(false);
     } else {
-      if (!audioRef.current.src) {
+      if (!mediaRef.current.src || mediaRef.current.src === window.location.href) {
         playTrack(currentTrackIndex);
       } else {
-        audioRef.current.play().then(() => setIsPlaying(true)).catch((err) => {
-          console.error(err);
-          playTrack(currentTrackIndex);
-        });
+        mediaRef.current
+          .play()
+          .then(() => setIsPlaying(true))
+          .catch((err) => {
+            console.error(err);
+            playTrack(currentTrackIndex);
+          });
       }
     }
   };
@@ -136,8 +120,19 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const time = parseFloat(e.target.value);
     setCurrentTime(time);
-    if (audioRef.current) {
-      audioRef.current.currentTime = time;
+    if (mediaRef.current) {
+      mediaRef.current.currentTime = time;
+    }
+  };
+
+  const handleToggleFullscreen = () => {
+    if (!mediaRef.current) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      if (mediaRef.current.requestFullscreen) {
+        mediaRef.current.requestFullscreen().catch(() => {});
+      }
     }
   };
 
@@ -148,45 +143,91 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
 
+  const coverImage = album.coverUrl || '/album-cover.jpg';
+
   return (
     <div className="w-full max-w-xl mx-auto space-y-6">
-      {/* Album Header Art */}
-      <div className="glass-panel rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 shadow-2xl border border-white/10 relative overflow-hidden">
+      {/* Video / Cinema Player Screen */}
+      <div className="glass-panel rounded-3xl p-3 sm:p-4 shadow-2xl border border-white/10 relative overflow-hidden">
         {/* Glow backdrop */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-accent-violet/20 rounded-full blur-[80px] pointer-events-none" />
 
-        <div className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-2xl overflow-hidden shadow-2xl shrink-0 group border border-white/10">
-          <img
-            src={album.coverUrl || 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=800'}
-            alt={album.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/10 group">
+          {/* HTML5 Video Element */}
+          <video
+            ref={mediaRef}
+            poster={coverImage}
+            playsInline
+            onTimeUpdate={() => mediaRef.current && setCurrentTime(mediaRef.current.currentTime)}
+            onLoadedMetadata={() => mediaRef.current && setDuration(mediaRef.current.duration)}
+            onEnded={handleNext}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            className="w-full h-full object-contain cursor-pointer"
+            onClick={togglePlayPause}
           />
-          {isPlaying && (
-            <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center">
-              <div className="flex items-end gap-1.5 h-8">
-                <div className="w-1.5 bg-brand-400 animate-[bounce_1s_infinite_100ms] h-full rounded-full" />
-                <div className="w-1.5 bg-accent-cyan animate-[bounce_1s_infinite_300ms] h-3/4 rounded-full" />
-                <div className="w-1.5 bg-accent-violet animate-[bounce_1s_infinite_200ms] h-full rounded-full" />
+
+          {/* Overlay when paused */}
+          {!isPlaying && !loadingStreamUrl && (
+            <div
+              onClick={togglePlayPause}
+              className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex flex-col items-center justify-center cursor-pointer transition-opacity"
+            >
+              <div className="w-16 h-16 rounded-full bg-brand-600/90 hover:bg-brand-500 text-white flex items-center justify-center shadow-2xl shadow-brand-500/50 transform group-hover:scale-110 transition-transform">
+                <Play className="w-8 h-8 fill-current ml-1" />
               </div>
+              <p className="mt-3 text-xs font-semibold text-white/90 drop-shadow">
+                Click to Watch Video
+              </p>
             </div>
           )}
+
+          {/* Loading Indicator */}
+          {loadingStreamUrl && (
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center">
+              <Loader2 className="w-10 h-10 text-brand-400 animate-spin mb-2" />
+              <p className="text-xs font-medium text-gray-300">Loading Video Stream...</p>
+            </div>
+          )}
+
+          {/* Top Info Bar inside Video */}
+          <div className="absolute top-3 left-3 right-3 flex justify-between items-center pointer-events-none">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-emerald-400 text-[11px] font-semibold">
+              <Sparkles className="w-3.5 h-3.5 text-accent-cyan" />
+              <span>Official Video Access</span>
+            </div>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleToggleFullscreen();
+              }}
+              className="pointer-events-auto p-2 rounded-xl bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/15 text-white/80 hover:text-white transition-colors"
+              title="Fullscreen"
+            >
+              <Maximize2 className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
-        <div className="text-center sm:text-left flex-1 space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-semibold">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Unlocked Permanent Access</span>
+        {/* Title & Artist Info Below Screen */}
+        <div className="px-2 pt-4 pb-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h1 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
+              {album.title}
+            </h1>
+            <p className="text-sm font-medium text-accent-cyan mt-0.5">{album.artist}</p>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">{album.title}</h1>
-          <p className="text-base font-medium text-gray-300">{album.artist}</p>
-          <p className="text-xs text-gray-500">{album.songs.length} Tracks • High-Fidelity Audio</p>
+          <div className="text-xs text-gray-400 font-mono">
+            {album.songs.length} Video Track • HD Playback
+          </div>
         </div>
       </div>
 
       {/* Track List */}
       <div className="glass-panel rounded-3xl p-4 sm:p-6 space-y-2 border border-white/10">
         <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 px-2">
-          Tracklist
+          Video Tracklist
         </h2>
 
         {album.songs.map((song, idx) => {
@@ -201,11 +242,11 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
                   : 'hover:bg-white/5 text-gray-300'
               }`}
             >
-              <div className="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center shrink-0 font-bold text-xs font-mono text-gray-400">
+              <div className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center shrink-0 font-bold text-xs font-mono text-gray-400">
                 {isSelected && isPlaying ? (
                   <Loader2 className="w-4 h-4 text-accent-cyan animate-spin" />
                 ) : (
-                  song.trackNo || idx + 1
+                  <Video className="w-4 h-4 text-brand-400" />
                 )}
               </div>
 
@@ -213,7 +254,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
                 <p className={`text-sm font-semibold truncate ${isSelected ? 'text-brand-300' : 'text-gray-200'}`}>
                   {song.title}
                 </p>
-                <p className="text-xs text-gray-500">{album.artist}</p>
+                <p className="text-xs text-gray-400">{album.artist}</p>
               </div>
 
               <div className="text-xs font-mono text-gray-400 shrink-0">
@@ -224,7 +265,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
         })}
       </div>
 
-      {/* Floating Sticky Audio Player Controls */}
+      {/* Floating Sticky Player Controls */}
       <div className="sticky bottom-4 z-40 glass-panel rounded-3xl p-4 sm:p-5 shadow-2xl border border-white/15 backdrop-blur-2xl">
         {streamError && (
           <p className="text-xs text-red-400 text-center mb-2">{streamError}</p>
@@ -254,7 +295,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
             {/* Active song info */}
             <div className="min-w-0 flex-1 flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-brand-500/20 border border-brand-500/30 flex items-center justify-center shrink-0">
-                <Music className="w-5 h-5 text-brand-400" />
+                <Video className="w-5 h-5 text-brand-400" />
               </div>
               <div className="min-w-0">
                 <p className="text-xs font-bold text-white truncate">{currentSong?.title || 'Select a track'}</p>

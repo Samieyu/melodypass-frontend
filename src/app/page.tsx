@@ -20,32 +20,49 @@ export default function HomePage() {
         </div>
 
         {/* Hero Graphic - Vinyl Album */}
-        <div className="relative w-64 h-64 mb-8 group">
+        <div className="relative w-72 h-72 mb-8 group">
           {/* Vinyl Disc Behind */}
-          <div className="absolute inset-0 bg-neutral-900 rounded-full border-4 border-neutral-800 shadow-2xl flex items-center justify-center animate-spin-slow group-hover:scale-105 transition-transform duration-500">
-            <div className="w-24 h-24 rounded-full border-2 border-neutral-700 bg-neutral-950 flex items-center justify-center">
-              <div className="w-8 h-8 rounded-full bg-brand-500/30 border border-brand-400" />
+          <div className="absolute inset-0 bg-neutral-900 rounded-full border-4 border-neutral-800 shadow-2xl flex items-center justify-center animate-spin-slow group-hover:scale-105 transition-transform duration-500 overflow-hidden">
+            {/* CD image background */}
+            <img
+              src="/cd-art.jpg"
+              alt="CD Album Art"
+              className="absolute inset-0 w-full h-full object-cover opacity-90 rounded-full"
+            />
+            {/* Center spindle hole */}
+            <div className="relative z-10 w-16 h-16 rounded-full border-4 border-neutral-900/90 bg-neutral-950 flex items-center justify-center backdrop-blur-sm shadow-inner">
+              <div className="w-5 h-5 rounded-full bg-neutral-900 border border-white/20" />
             </div>
-            <div className="absolute inset-0 rounded-full border border-white/5" />
+            <div className="absolute inset-0 rounded-full border-2 border-white/20 pointer-events-none" />
           </div>
 
           {/* Album Cover Sleeve */}
-          <div className="absolute inset-y-0 left-0 w-48 rounded-2xl glass-card overflow-hidden shadow-2xl border border-white/10 flex flex-col justify-between p-4 group-hover:-translate-x-4 transition-transform duration-500 bg-gradient-to-br from-indigo-900/90 via-purple-900/80 to-slate-900/90">
-            <div className="flex justify-between items-start">
+          <div className="absolute inset-y-0 left-0 w-52 rounded-2xl glass-card overflow-hidden shadow-2xl border border-white/10 flex flex-col justify-between p-4 group-hover:-translate-x-6 transition-transform duration-500 relative">
+            <img
+              src="/album-cover.jpg"
+              alt="Album Cover - Abener Tagesse"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/60 pointer-events-none" />
+            
+            <div className="relative z-10 flex justify-between items-start">
               <Disc3 className="w-6 h-6 text-brand-400" />
-              <span className="text-[10px] font-mono tracking-widest text-gray-400 uppercase">OFFICIAL PASS</span>
+              <span className="text-[10px] font-mono tracking-widest text-gray-200 uppercase bg-black/60 px-2 py-0.5 rounded-full backdrop-blur-sm border border-white/10">
+                OFFICIAL PASS
+              </span>
             </div>
-            <div className="text-left">
-              <p className="text-xs uppercase font-bold text-accent-cyan tracking-wider">EXCLUSIVE ALBUM</p>
-              <h2 className="text-lg font-extrabold text-white leading-tight">Neon Echoes</h2>
-              <p className="text-xs text-gray-300">by Aura V</p>
+            
+            <div className="relative z-10 text-left">
+              <p className="text-[11px] uppercase font-bold text-accent-cyan tracking-wider drop-shadow">NEW GOSPEL VIDEO</p>
+              <h2 className="text-xl font-extrabold text-white leading-tight drop-shadow-md">ንካኝ ዛሬ</h2>
+              <p className="text-xs text-gray-200 drop-shadow font-medium">by Abener Tagesse</p>
             </div>
           </div>
         </div>
 
         {/* Title & Tagline */}
         <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
-          QR Album <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-accent-violet to-accent-cyan">Access</span>
+          QR Song <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-accent-violet to-accent-cyan">Access</span>
         </h1>
         <p className="text-sm text-gray-400 max-w-xs mb-8">
           Enter your 6-character pass code to unlock full album playback permanently on this device.
