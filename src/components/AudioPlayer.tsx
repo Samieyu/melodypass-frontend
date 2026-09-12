@@ -71,9 +71,22 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
       const res = await apiFetch<{ streamUrl: string }>(`/songs/${song.id}/stream-url`);
       
       if (mediaRef.current) {
-        mediaRef.current.src = res.streamUrl;
-        await mediaRef.current.play();
-        setIsPlaying(true);
+        // Resolve absolute URL if relative
+        const resolvedUrl = res.streamUrl.startsWith('http')
+          ? res.streamUrl
+          : `${window.location.origin}${res.streamUrl.startsWith('/') ? '' : '/'}${res.streamUrl}`;
+
+        console.log('Playing video stream URL:', resolvedUrl);
+        mediaRef.current.src = resolvedUrl;
+        mediaRef.current.load(); // Vital for browser media engine to load new source
+
+        try {
+          await mediaRef.current.play();
+          setIsPlaying(true);
+        } catch (playErr: any) {
+          console.warn('Play interrupted or requires interaction:', playErr);
+          // If auto-play was blocked or failed, keep isPlaying false but src loaded
+        }
       }
     } catch (err: any) {
       console.error('Playback stream error:', err);
@@ -158,11 +171,28 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
             ref={mediaRef}
             poster={coverImage}
             playsInline
+            preload="metadata"
             onTimeUpdate={() => mediaRef.current && setCurrentTime(mediaRef.current.currentTime)}
             onLoadedMetadata={() => mediaRef.current && setDuration(mediaRef.current.duration)}
             onEnded={handleNext}
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
+            onError={(e) => {
+              const video = e.currentTarget;
+              console.error('Video load error:', video.error, 'Source was:', video.src);
+              
+              // If it failed loading /videos/nkan-zare.mp4, try fallback to /video.mp4
+              if (video.src && video.src.includes('/videos/nkan-zare.mp4')) {
+                console.log('Retrying with fallback /video.mp4...');
+                video.src = `${window.location.origin}/video.mp4`;
+                video.load();
+                video.play().catch(() => {});
+                return;
+              }
+
+              setStreamError('Could not play video source. If using Cloudflare R2, make sure CORS is enabled on the bucket.');
+              setIsPlaying(false);
+            }}
             className="w-full h-full object-contain cursor-pointer"
             onClick={togglePlayPause}
           />
