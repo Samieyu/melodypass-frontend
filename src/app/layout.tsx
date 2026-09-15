@@ -20,7 +20,9 @@ export default function RootLayout({
         <ColdStartBanner />
         <main className="flex-1 flex flex-col">{children}</main>
         <footer className="py-6 text-center text-xs text-gray-500 border-t border-white/5">
-          <p>© {new Date().getFullYear()} QR Song Access (ንካኝ ዛሬ). Powered by Samuel Woldemeskel.</p>
+          <p>© {new Date().getFullYear()} QR Song Access (ንካኝ ዛሬ). Powered by Samuel Woldemeskel</p>
+          <p>© {new Date().getFullYear()} "Whatever you do, do it all for the glory of God." -1 Corinthians 10:31</p>
+          <p>© {new Date().getFullYear()} More Products: +251959828576</p>
         </footer>
       </body>
     </html>
