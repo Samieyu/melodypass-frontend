@@ -220,7 +220,7 @@ export function AccessCodeForm() {
           <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
             6-Character Access Code
           </label>
-          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Excludes 0/O, 1/I/L</span>
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Enter</span>
         </div>
         
         <div className="grid grid-cols-6 gap-2 sm:gap-3">
