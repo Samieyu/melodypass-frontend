@@ -243,20 +243,20 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
         {/* Title & Artist Info Below Screen */}
         <div className="px-2 pt-4 pb-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
+            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white leading-tight">
               {album.title}
             </h1>
-            <p className="text-sm font-bold text-cyan-400 mt-0.5">{album.artist}</p>
+            <p className="text-sm font-bold text-indigo-600 dark:text-cyan-400 mt-0.5">{album.artist}</p>
           </div>
-          <div className="text-xs text-slate-300 font-mono font-medium">
+          <div className="text-xs text-slate-500 dark:text-slate-300 font-mono font-medium">
             {album.songs.length} Video Track • HD Playback
           </div>
         </div>
       </div>
 
       {/* Track List */}
-      <div className="glass-panel rounded-3xl p-4 sm:p-6 space-y-2 border border-white/15">
-        <h2 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3 px-2">
+      <div className="glass-panel rounded-3xl p-4 sm:p-6 space-y-2 border border-slate-200 dark:border-white/15">
+        <h2 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-3 px-2">
           Video Tracklist
         </h2>
 
@@ -268,28 +268,30 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
               onClick={() => playTrack(idx)}
               className={`w-full p-3.5 rounded-2xl flex items-center gap-4 transition-all duration-200 text-left ${
                 isSelected
-                  ? 'bg-gradient-to-r from-indigo-950/90 via-indigo-900/60 to-slate-900/80 border-2 border-indigo-400/60 text-white shadow-xl'
-                  : 'bg-slate-900/60 border border-slate-700/60 hover:border-slate-500 hover:bg-slate-800/80 text-slate-200'
+                  ? 'bg-gradient-to-r from-indigo-50 via-indigo-100/70 to-white border-2 border-indigo-500 text-indigo-950 shadow-md dark:bg-gradient-to-r dark:from-indigo-950/90 dark:via-indigo-900/60 dark:to-slate-900/80 dark:border-indigo-400/60 dark:text-white dark:shadow-xl'
+                  : 'bg-white/80 border border-slate-200 hover:border-slate-400 hover:bg-slate-50 text-slate-800 dark:bg-slate-900/60 dark:border-slate-700/60 dark:hover:border-slate-500 dark:hover:bg-slate-800/80 dark:text-slate-200'
               }`}
             >
               <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 font-bold text-xs font-mono ${
-                isSelected ? 'bg-indigo-500/20 text-cyan-300 border border-indigo-400/30' : 'bg-slate-800 text-slate-300 border border-slate-700'
+                isSelected 
+                  ? 'bg-indigo-100 text-indigo-700 border border-indigo-300 dark:bg-indigo-500/20 dark:text-cyan-300 dark:border-indigo-400/30' 
+                  : 'bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
               }`}>
                 {isSelected && isPlaying ? (
-                  <Loader2 className="w-4 h-4 text-cyan-400 animate-spin" />
+                  <Loader2 className="w-4 h-4 text-indigo-600 dark:text-cyan-400 animate-spin" />
                 ) : (
-                  <Video className="w-4 h-4 text-indigo-400" />
+                  <Video className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                 )}
               </div>
 
               <div className="flex-1 min-w-0">
-                <p className={`text-sm truncate ${isSelected ? 'text-white font-bold' : 'text-slate-100 font-semibold'}`}>
+                <p className={`text-sm truncate ${isSelected ? 'text-indigo-950 dark:text-white font-bold' : 'text-slate-900 dark:text-slate-100 font-semibold'}`}>
                   {song.title}
                 </p>
-                <p className="text-xs text-slate-300 font-medium">{album.artist}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">{album.artist}</p>
               </div>
 
-              <div className="text-xs font-mono text-slate-300 font-medium shrink-0">
+              <div className="text-xs font-mono text-slate-500 dark:text-slate-300 font-medium shrink-0">
                 {song.duration ? formatTime(song.duration) : '--:--'}
               </div>
             </button>
@@ -298,15 +300,15 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
       </div>
 
       {/* Floating Sticky Player Controls */}
-      <div className="sticky bottom-4 z-40 glass-panel rounded-3xl p-4 sm:p-5 shadow-2xl border-2 border-slate-700/60 backdrop-blur-2xl bg-slate-950/95">
+      <div className="sticky bottom-4 z-40 glass-panel rounded-3xl p-4 sm:p-5 shadow-2xl border-2 border-slate-300/80 dark:border-slate-700/60 backdrop-blur-2xl bg-white/95 dark:bg-slate-950/95">
         {streamError && (
-          <p className="text-xs text-red-300 font-semibold text-center mb-2">{streamError}</p>
+          <p className="text-xs text-red-600 dark:text-red-300 font-semibold text-center mb-2">{streamError}</p>
         )}
 
         <div className="space-y-3">
           {/* Progress Seek Bar */}
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono text-slate-200 min-w-[38px] text-right font-semibold">
+            <span className="text-xs font-mono text-slate-600 dark:text-slate-200 min-w-[38px] text-right font-semibold">
               {formatTime(currentTime)}
             </span>
             <input
@@ -315,9 +317,9 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
               max={duration || 100}
               value={currentTime}
               onChange={handleSeek}
-              className="flex-1 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+              className="flex-1 h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-600 dark:accent-indigo-500"
             />
-            <span className="text-xs font-mono text-slate-200 min-w-[38px] font-semibold">
+            <span className="text-xs font-mono text-slate-600 dark:text-slate-200 min-w-[38px] font-semibold">
               {formatTime(duration)}
             </span>
           </div>
@@ -326,12 +328,12 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
           <div className="flex items-center justify-between gap-4 pt-1">
             {/* Active song info */}
             <div className="min-w-0 flex-1 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-indigo-600/25 border border-indigo-400/40 flex items-center justify-center shrink-0">
-                <Video className="w-5 h-5 text-indigo-300" />
+              <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-600/25 border border-indigo-200 dark:border-indigo-400/40 flex items-center justify-center shrink-0">
+                <Video className="w-5 h-5 text-indigo-600 dark:text-indigo-300" />
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-bold text-white truncate">{currentSong?.title || 'Select a track'}</p>
-                <p className="text-[11px] text-slate-300 font-medium truncate">{album.artist}</p>
+                <p className="text-xs font-bold text-slate-900 dark:text-white truncate">{currentSong?.title || 'Select a track'}</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-300 font-medium truncate">{album.artist}</p>
               </div>
             </div>
 
@@ -339,7 +341,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
             <div className="flex items-center gap-3 shrink-0">
               <button
                 onClick={handlePrev}
-                className="p-2 text-slate-300 hover:text-white transition-colors"
+                className="p-2 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
                 title="Previous Track"
               >
                 <SkipBack className="w-5 h-5" />
@@ -361,7 +363,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
 
               <button
                 onClick={handleNext}
-                className="p-2 text-slate-300 hover:text-white transition-colors"
+                className="p-2 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
                 title="Next Track"
               >
                 <SkipForward className="w-5 h-5" />
@@ -372,10 +374,10 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
             <div className="hidden sm:flex items-center gap-2 shrink-0">
               <button
                 onClick={() => setIsMuted(!isMuted)}
-                className="text-slate-300 hover:text-white transition-colors"
+                className="text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
               >
                 {isMuted || volume === 0 ? (
-                  <VolumeX className="w-4 h-4 text-red-400" />
+                  <VolumeX className="w-4 h-4 text-red-500 dark:text-red-400" />
                 ) : (
                   <Volume2 className="w-4 h-4" />
                 )}
@@ -390,7 +392,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
                   setVolume(parseFloat(e.target.value));
                   setIsMuted(false);
                 }}
-                className="w-16 h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                className="w-16 h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-600 dark:accent-indigo-500"
               />
             </div>
           </div>

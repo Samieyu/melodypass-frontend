@@ -17,21 +17,21 @@ export default function HomePage() {
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center p-4 overflow-hidden">
       {/* Dynamic Background Effects */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/25 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-blue-600/20 rounded-full blur-[110px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/15 dark:bg-indigo-600/25 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-blue-500/10 dark:bg-blue-600/20 rounded-full blur-[110px] pointer-events-none" />
 
       {/* Main Container */}
       <div className="w-full max-w-md mx-auto z-10 flex flex-col items-center text-center">
         {/* Header Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel text-xs font-bold text-indigo-300 mb-6 border border-indigo-400/35 shadow-sm">
-          <Sparkles className="w-4 h-4 text-cyan-400" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel text-xs font-bold text-indigo-700 dark:text-indigo-300 mb-6 border border-indigo-300/80 dark:border-indigo-400/35 shadow-sm">
+          <Sparkles className="w-4 h-4 text-indigo-600 dark:text-cyan-400" />
           <span>Physical Pass to Digital Access</span>
         </div>
 
         {/* Mobile-First Physical CD & Album Sleeve Presentation (50% in, 50% out) */}
         <div className="relative w-[270px] sm:w-[290px] h-[180px] sm:h-[190px] my-6 select-none mx-auto">
           {/* Rotating CD Disc - Exactly 50% inside the rectangle (behind it), 50% outside */}
-          <div className="absolute left-[90px] sm:left-[95px] top-0 w-[180px] h-[180px] sm:w-[190px] sm:h-[190px] rounded-full shadow-[0_12px_35px_rgba(0,0,0,0.85)] border-2 border-slate-600 z-10 animate-spin-slow overflow-hidden flex items-center justify-center">
+          <div className="absolute left-[90px] sm:left-[95px] top-0 w-[180px] h-[180px] sm:w-[190px] sm:h-[190px] rounded-full shadow-[0_12px_35px_rgba(0,0,0,0.45)] dark:shadow-[0_12px_35px_rgba(0,0,0,0.85)] border-2 border-slate-400 dark:border-slate-600 z-10 animate-spin-slow overflow-hidden flex items-center justify-center">
             {/* CD Disc Face Image */}
             <img
               src="/cd-art.jpg"
@@ -50,7 +50,7 @@ export default function HomePage() {
           </div>
 
           {/* Album Cover Rectangle Sleeve - Anchored on the left */}
-          <div className="absolute left-0 top-0 w-[180px] h-[180px] sm:w-[190px] sm:h-[190px] rounded-2xl overflow-hidden shadow-[0_18px_40px_rgba(0,0,0,0.95)] border border-white/25 z-20 transition-transform duration-200">
+          <div className="absolute left-0 top-0 w-[180px] h-[180px] sm:w-[190px] sm:h-[190px] rounded-2xl overflow-hidden shadow-[0_18px_40px_rgba(0,0,0,0.3)] dark:shadow-[0_18px_40px_rgba(0,0,0,0.95)] border border-slate-200 dark:border-white/25 z-20 transition-transform duration-200">
             <img
               src="/album-cover.jpg"
               alt="Album Cover - Abener Tagesse"
@@ -69,13 +69,13 @@ export default function HomePage() {
 
         {/* Song & Artist Title */}
         <div className="mb-3">
-          <p className="text-xs uppercase font-bold text-cyan-400 tracking-widest drop-shadow-sm">NEW GOSPEL MUSIC VIDEO</p>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-1">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-cyan-300">ንካኝ ዛሬ</span>
+          <p className="text-xs uppercase font-bold text-indigo-600 dark:text-cyan-400 tracking-widest drop-shadow-sm">NEW GOSPEL MUSIC VIDEO</p>
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mt-1">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-800 dark:from-white dark:via-indigo-200 dark:to-cyan-300">ንካኝ ዛሬ</span>
           </h1>
-          <p className="text-base font-bold text-slate-200 mt-1">Singer Abener Tagesse</p>
+          <p className="text-base font-bold text-slate-700 dark:text-slate-200 mt-1">Singer Abener Tagesse</p>
         </div>
-        <p className="text-sm text-slate-300 max-w-xs mb-6 leading-relaxed">
+        <p className="text-sm text-slate-600 dark:text-slate-300 max-w-xs mb-6 leading-relaxed font-medium">
           {savedSession
             ? 'Your device is authenticated! Click below to resume your video immediately.'
             : 'Enter your 6-character pass code to unlock the full official video permanently on this device.'}
@@ -95,7 +95,7 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/access"
-                className="inline-block text-xs font-medium text-slate-400 hover:text-white transition-colors underline underline-offset-4 pt-1"
+                className="inline-block text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors underline underline-offset-4 pt-1"
               >
                 Enter a different code
               </Link>
@@ -114,18 +114,18 @@ export default function HomePage() {
 
         {/* Value Props */}
         <div className="grid grid-cols-2 gap-3 w-full text-left">
-          <div className="p-4 rounded-2xl glass-card border border-white/15 bg-slate-850/70 flex items-start gap-3 shadow-md">
-            <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+          <div className="p-4 rounded-2xl glass-card border border-slate-200 dark:border-white/15 flex items-start gap-3 shadow-sm">
+            <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
             <div>
-              <h3 className="text-xs font-bold text-white">1-Device Binding</h3>
-              <p className="text-xs text-slate-300 mt-0.5">Locked securely to this phone</p>
+              <h3 className="text-xs font-bold text-slate-900 dark:text-white">1-Device Binding</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5 font-medium">Locked securely to this phone</p>
             </div>
           </div>
-          <div className="p-4 rounded-2xl glass-card border border-white/15 bg-slate-850/70 flex items-start gap-3 shadow-md">
-            <Music2 className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
+          <div className="p-4 rounded-2xl glass-card border border-slate-200 dark:border-white/15 flex items-start gap-3 shadow-sm">
+            <Music2 className="w-5 h-5 text-indigo-600 dark:text-cyan-400 shrink-0 mt-0.5" />
             <div>
-              <h3 className="text-xs font-bold text-white">Fast Streaming</h3>
-              <p className="text-xs text-slate-300 mt-0.5">Cloudflare R2 HD playback</p>
+              <h3 className="text-xs font-bold text-slate-900 dark:text-white">Fast Streaming</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5 font-medium">Cloudflare R2 HD playback</p>
             </div>
           </div>
         </div>
@@ -134,7 +134,7 @@ export default function HomePage() {
         <div className="mt-8">
           <Link
             href="/admin/login"
-            className="text-xs font-medium text-slate-400 hover:text-slate-200 transition-colors underline underline-offset-4"
+            className="text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors underline underline-offset-4"
           >
             Artist / Admin Login
           </Link>

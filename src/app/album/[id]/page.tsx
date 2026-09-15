@@ -44,8 +44,8 @@ export default function AlbumPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4">
-        <Loader2 className="w-10 h-10 text-indigo-400 animate-spin mb-4" />
-        <p className="text-sm font-semibold text-slate-200">Verifying session & loading music video...</p>
+        <Loader2 className="w-10 h-10 text-indigo-600 dark:text-indigo-400 animate-spin mb-4" />
+        <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">Verifying session & loading music video...</p>
       </div>
     );
   }
@@ -53,12 +53,12 @@ export default function AlbumPage() {
   if (error || !album) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4">
-        <div className="w-full max-w-md glass-panel rounded-3xl p-6 sm:p-8 text-center border-2 border-red-500/30 shadow-2xl">
-          <div className="w-16 h-16 rounded-full bg-red-500/15 border-2 border-red-500/40 flex items-center justify-center text-red-300 mx-auto mb-4">
+        <div className="w-full max-w-md glass-panel rounded-3xl p-6 sm:p-8 text-center border-2 border-red-500/30 shadow-xl dark:shadow-2xl">
+          <div className="w-16 h-16 rounded-full bg-red-500/10 dark:bg-red-500/15 border-2 border-red-500/30 dark:border-red-500/40 flex items-center justify-center text-red-600 dark:text-red-300 mx-auto mb-4">
             <Lock className="w-8 h-8" />
           </div>
-          <h1 className="text-xl font-bold text-white mb-2">Album Access Restricted</h1>
-          <p className="text-sm text-slate-200 mb-6 font-medium leading-relaxed">{error}</p>
+          <h1 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Album Access Restricted</h1>
+          <p className="text-sm text-slate-700 dark:text-slate-200 mb-6 font-medium leading-relaxed">{error}</p>
 
           <div className="space-y-3">
             <Link
@@ -69,9 +69,9 @@ export default function AlbumPage() {
             </Link>
             <button
               onClick={fetchAlbum}
-              className="w-full py-2.5 px-4 rounded-xl border border-slate-700 bg-slate-800/80 text-slate-200 hover:text-white hover:bg-slate-800 text-xs font-bold flex items-center justify-center gap-2 transition-colors"
+              className="w-full py-2.5 px-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:text-white dark:hover:bg-slate-800 text-xs font-bold flex items-center justify-center gap-2 transition-colors"
             >
-              <RefreshCw className="w-3.5 h-3.5 text-indigo-400" />
+              <RefreshCw className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
               <span>Retry Session</span>
             </button>
           </div>
@@ -85,9 +85,9 @@ export default function AlbumPage() {
       <div className="max-w-xl mx-auto mb-6">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
         >
-          <ArrowLeft className="w-4 h-4 text-indigo-400" />
+          <ArrowLeft className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
           <span>Home</span>
         </Link>
       </div>
