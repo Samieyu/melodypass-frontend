@@ -160,18 +160,15 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
 
   return (
     <div className="w-full max-w-xl mx-auto space-y-6">
-      {/* Video / Cinema Player Screen */}
-      <div className="glass-panel rounded-3xl p-3 sm:p-4 shadow-2xl border border-white/20 relative overflow-hidden">
-        {/* Glow backdrop */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/25 rounded-full blur-[80px] pointer-events-none" />
-
-        <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/15 group">
-          {/* HTML5 Video Element */}
+      {/* Video / Cinema Player Screen - High Performance Hardware Accelerated */}
+      <div className="rounded-3xl p-3 sm:p-4 shadow-xl border border-slate-200 dark:border-white/15 bg-slate-900/90 dark:bg-slate-950 relative isolate">
+        <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black border border-white/10 shadow-lg isolate transform-gpu group">
+          {/* HTML5 Video Element - GPU Accelerated */}
           <video
             ref={mediaRef}
             poster={coverImage}
             playsInline
-            preload="metadata"
+            preload="auto"
             onTimeUpdate={() => mediaRef.current && setCurrentTime(mediaRef.current.currentTime)}
             onLoadedMetadata={() => mediaRef.current && setDuration(mediaRef.current.duration)}
             onEnded={handleNext}
@@ -193,7 +190,8 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
               setStreamError('Could not play video source. If using Cloudflare R2, make sure CORS is enabled on the bucket.');
               setIsPlaying(false);
             }}
-            className="w-full h-full object-contain cursor-pointer"
+            className="w-full h-full object-contain cursor-pointer transform-gpu"
+            style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
             onClick={togglePlayPause}
           />
 
@@ -201,7 +199,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
           {!isPlaying && !loadingStreamUrl && (
             <div
               onClick={togglePlayPause}
-              className="absolute inset-0 bg-black/45 backdrop-blur-[2px] flex flex-col items-center justify-center cursor-pointer transition-opacity"
+              className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center cursor-pointer transition-opacity"
             >
               <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 text-white flex items-center justify-center shadow-2xl shadow-indigo-600/60 transform group-hover:scale-110 transition-transform border border-white/30">
                 <Play className="w-8 h-8 fill-current ml-1" />
@@ -214,7 +212,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
 
           {/* Loading Indicator */}
           {loadingStreamUrl && (
-            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex flex-col items-center justify-center">
+            <div className="absolute inset-0 bg-black/75 flex flex-col items-center justify-center">
               <Loader2 className="w-10 h-10 text-indigo-400 animate-spin mb-2" />
               <p className="text-xs font-semibold text-slate-200">Loading Video Stream...</p>
             </div>
@@ -222,7 +220,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
 
           {/* Top Info Bar inside Video */}
           <div className="absolute top-3 left-3 right-3 flex justify-between items-center pointer-events-none">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-[11px] font-bold shadow-md">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/90 border border-emerald-400/40 text-emerald-300 text-[11px] font-bold shadow-md">
               <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
               <span>Official Video Access</span>
             </div>
@@ -232,7 +230,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
                 e.stopPropagation();
                 handleToggleFullscreen();
               }}
-              className="pointer-events-auto p-2 rounded-xl bg-slate-950/80 hover:bg-slate-900 backdrop-blur-md border border-white/20 text-slate-200 hover:text-white transition-colors"
+              className="pointer-events-auto p-2 rounded-xl bg-slate-950/90 hover:bg-slate-900 border border-white/20 text-slate-200 hover:text-white transition-colors"
               title="Fullscreen"
             >
               <Maximize2 className="w-4 h-4" />
