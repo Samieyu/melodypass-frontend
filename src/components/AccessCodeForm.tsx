@@ -137,79 +137,79 @@ export function AccessCodeForm() {
     <form onSubmit={handleSubmit} className="w-full space-y-6">
       {/* Cached Session Quick Resume Card */}
       {cachedAlbumId && (
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/20 via-brand-500/20 to-purple-500/20 border border-emerald-500/30 text-white space-y-3 shadow-lg">
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/20 via-indigo-500/20 to-purple-500/20 border-2 border-emerald-500/40 text-white space-y-3 shadow-xl">
           <div className="flex items-center gap-2 text-emerald-300 font-bold text-sm">
             <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
             <span>Device Already Verified!</span>
           </div>
-          <p className="text-xs text-gray-300 leading-relaxed">
+          <p className="text-xs text-slate-200 leading-relaxed font-medium">
             You already unlocked <strong className="text-white">ንካኝ ዛሬ</strong> on this device. You can jump directly to the video without entering your code again.
           </p>
           <button
             type="button"
             onClick={() => router.push(`/album/${cachedAlbumId}`)}
-            className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-brand-600 to-accent-violet hover:opacity-95 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-transform"
+            className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 active:scale-95 transition-all border border-emerald-400/30"
           >
             <span>▶ Resume Watching Video</span>
             <ArrowRight className="w-4 h-4" />
           </button>
           <div className="text-center pt-1">
-            <span className="text-[11px] text-gray-400">Or enter a different code below</span>
+            <span className="text-[11px] text-slate-400 font-medium">Or enter a different code below</span>
           </div>
         </div>
       )}
 
       {/* Error Alert */}
       {error && (
-        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-sm flex items-start gap-3 animate-shake">
+        <div className="p-4 rounded-xl bg-red-500/15 border-2 border-red-500/40 text-red-200 text-sm flex items-start gap-3 animate-shake shadow-lg">
           <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
           <div>
-            <p className="font-semibold text-red-200">Access Denied</p>
-            <p className="text-xs text-red-300/90 mt-0.5">{error}</p>
+            <p className="font-bold text-white">Access Denied</p>
+            <p className="text-xs text-red-200 mt-0.5 font-medium">{error}</p>
           </div>
         </div>
       )}
 
       {/* Success Alert */}
       {successMsg && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-sm flex items-center gap-3">
+        <div className="p-4 rounded-xl bg-emerald-500/15 border-2 border-emerald-500/40 text-emerald-200 text-sm flex items-center gap-3 shadow-lg">
           <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
-          <span>{successMsg}</span>
+          <span className="font-medium text-white">{successMsg}</span>
         </div>
       )}
 
       {/* Name Input */}
       <div>
-        <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+        <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-2">
           Your Name
         </label>
         <div className="relative">
-          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input
             type="text"
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="John Doe"
-            className="w-full pl-10 pr-4 py-3 rounded-xl glass-input text-sm text-white placeholder-gray-500"
+            className="w-full pl-10 pr-4 py-3 rounded-xl glass-input text-sm text-white placeholder-slate-400 font-medium"
           />
         </div>
       </div>
 
       {/* Phone Input */}
       <div>
-        <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+        <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider mb-2">
           Phone Number
         </label>
         <div className="relative">
-          <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input
             type="tel"
             required
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="+1 555 019 2831"
-            className="w-full pl-10 pr-4 py-3 rounded-xl glass-input text-sm text-white placeholder-gray-500"
+            className="w-full pl-10 pr-4 py-3 rounded-xl glass-input text-sm text-white placeholder-slate-400 font-medium"
           />
         </div>
       </div>
@@ -217,10 +217,10 @@ export function AccessCodeForm() {
       {/* 6-Character Access Code Boxes */}
       <div>
         <div className="flex justify-between items-center mb-2">
-          <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider">
+          <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider">
             6-Character Access Code
           </label>
-          <span className="text-[10px] text-gray-500">Excludes 0/O, 1/I/L</span>
+          <span className="text-[11px] font-semibold text-slate-400">Excludes 0/O, 1/I/L</span>
         </div>
         
         <div className="grid grid-cols-6 gap-2 sm:gap-3">
@@ -234,7 +234,7 @@ export function AccessCodeForm() {
               onChange={(e) => handleDigitChange(idx, e.target.value)}
               onKeyDown={(e) => handleKeyDown(idx, e)}
               onPaste={handlePaste}
-              className="w-full h-14 text-center text-xl font-bold font-mono tracking-wider rounded-xl glass-input text-brand-400 uppercase focus:border-brand-500 border-white/10"
+              className="w-full h-14 text-center text-2xl font-black font-mono tracking-wider rounded-xl bg-slate-900/95 border-2 border-slate-600 text-indigo-300 uppercase focus:border-indigo-400 focus:bg-slate-900 focus:ring-2 focus:ring-indigo-500/40 transition-all outline-none shadow-md"
             />
           ))}
         </div>
@@ -244,7 +244,7 @@ export function AccessCodeForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-brand-600 via-accent-violet to-brand-500 hover:opacity-95 text-white font-bold text-base shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-50"
+        className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 text-white font-extrabold text-base shadow-xl shadow-indigo-600/35 flex items-center justify-center gap-2 transition-all duration-200 active:scale-[0.98] disabled:opacity-50 border border-white/20"
       >
         {loading ? (
           <>
@@ -253,7 +253,7 @@ export function AccessCodeForm() {
           </>
         ) : (
           <>
-            <span>Activate & Listen</span>
+            <span>Activate & Watch Video</span>
             <ArrowRight className="w-5 h-5" />
           </>
         )}

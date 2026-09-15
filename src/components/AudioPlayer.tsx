@@ -161,11 +161,11 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
   return (
     <div className="w-full max-w-xl mx-auto space-y-6">
       {/* Video / Cinema Player Screen */}
-      <div className="glass-panel rounded-3xl p-3 sm:p-4 shadow-2xl border border-white/10 relative overflow-hidden">
+      <div className="glass-panel rounded-3xl p-3 sm:p-4 shadow-2xl border border-white/20 relative overflow-hidden">
         {/* Glow backdrop */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-accent-violet/20 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/25 rounded-full blur-[80px] pointer-events-none" />
 
-        <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/10 group">
+        <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/15 group">
           {/* HTML5 Video Element */}
           <video
             ref={mediaRef}
@@ -201,12 +201,12 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
           {!isPlaying && !loadingStreamUrl && (
             <div
               onClick={togglePlayPause}
-              className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex flex-col items-center justify-center cursor-pointer transition-opacity"
+              className="absolute inset-0 bg-black/45 backdrop-blur-[2px] flex flex-col items-center justify-center cursor-pointer transition-opacity"
             >
-              <div className="w-16 h-16 rounded-full bg-brand-600/90 hover:bg-brand-500 text-white flex items-center justify-center shadow-2xl shadow-brand-500/50 transform group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 text-white flex items-center justify-center shadow-2xl shadow-indigo-600/60 transform group-hover:scale-110 transition-transform border border-white/30">
                 <Play className="w-8 h-8 fill-current ml-1" />
               </div>
-              <p className="mt-3 text-xs font-semibold text-white/90 drop-shadow">
+              <p className="mt-3 text-xs font-bold text-white drop-shadow-md tracking-wide">
                 Click to Watch Video
               </p>
             </div>
@@ -214,16 +214,16 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
 
           {/* Loading Indicator */}
           {loadingStreamUrl && (
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center">
-              <Loader2 className="w-10 h-10 text-brand-400 animate-spin mb-2" />
-              <p className="text-xs font-medium text-gray-300">Loading Video Stream...</p>
+            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex flex-col items-center justify-center">
+              <Loader2 className="w-10 h-10 text-indigo-400 animate-spin mb-2" />
+              <p className="text-xs font-semibold text-slate-200">Loading Video Stream...</p>
             </div>
           )}
 
           {/* Top Info Bar inside Video */}
           <div className="absolute top-3 left-3 right-3 flex justify-between items-center pointer-events-none">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-emerald-400 text-[11px] font-semibold">
-              <Sparkles className="w-3.5 h-3.5 text-accent-cyan" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-[11px] font-bold shadow-md">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
               <span>Official Video Access</span>
             </div>
 
@@ -232,7 +232,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
                 e.stopPropagation();
                 handleToggleFullscreen();
               }}
-              className="pointer-events-auto p-2 rounded-xl bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/15 text-white/80 hover:text-white transition-colors"
+              className="pointer-events-auto p-2 rounded-xl bg-slate-950/80 hover:bg-slate-900 backdrop-blur-md border border-white/20 text-slate-200 hover:text-white transition-colors"
               title="Fullscreen"
             >
               <Maximize2 className="w-4 h-4" />
@@ -246,17 +246,17 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
             <h1 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
               {album.title}
             </h1>
-            <p className="text-sm font-medium text-accent-cyan mt-0.5">{album.artist}</p>
+            <p className="text-sm font-bold text-cyan-400 mt-0.5">{album.artist}</p>
           </div>
-          <div className="text-xs text-gray-400 font-mono">
+          <div className="text-xs text-slate-300 font-mono font-medium">
             {album.songs.length} Video Track • HD Playback
           </div>
         </div>
       </div>
 
       {/* Track List */}
-      <div className="glass-panel rounded-3xl p-4 sm:p-6 space-y-2 border border-white/10">
-        <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 px-2">
+      <div className="glass-panel rounded-3xl p-4 sm:p-6 space-y-2 border border-white/15">
+        <h2 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3 px-2">
           Video Tracklist
         </h2>
 
@@ -268,26 +268,28 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
               onClick={() => playTrack(idx)}
               className={`w-full p-3.5 rounded-2xl flex items-center gap-4 transition-all duration-200 text-left ${
                 isSelected
-                  ? 'bg-gradient-to-r from-brand-600/30 via-accent-violet/20 to-transparent border border-brand-500/40 text-white shadow-lg'
-                  : 'hover:bg-white/5 text-gray-300'
+                  ? 'bg-gradient-to-r from-indigo-950/90 via-indigo-900/60 to-slate-900/80 border-2 border-indigo-400/60 text-white shadow-xl'
+                  : 'bg-slate-900/60 border border-slate-700/60 hover:border-slate-500 hover:bg-slate-800/80 text-slate-200'
               }`}
             >
-              <div className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center shrink-0 font-bold text-xs font-mono text-gray-400">
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 font-bold text-xs font-mono ${
+                isSelected ? 'bg-indigo-500/20 text-cyan-300 border border-indigo-400/30' : 'bg-slate-800 text-slate-300 border border-slate-700'
+              }`}>
                 {isSelected && isPlaying ? (
-                  <Loader2 className="w-4 h-4 text-accent-cyan animate-spin" />
+                  <Loader2 className="w-4 h-4 text-cyan-400 animate-spin" />
                 ) : (
-                  <Video className="w-4 h-4 text-brand-400" />
+                  <Video className="w-4 h-4 text-indigo-400" />
                 )}
               </div>
 
               <div className="flex-1 min-w-0">
-                <p className={`text-sm font-semibold truncate ${isSelected ? 'text-brand-300' : 'text-gray-200'}`}>
+                <p className={`text-sm truncate ${isSelected ? 'text-white font-bold' : 'text-slate-100 font-semibold'}`}>
                   {song.title}
                 </p>
-                <p className="text-xs text-gray-400">{album.artist}</p>
+                <p className="text-xs text-slate-300 font-medium">{album.artist}</p>
               </div>
 
-              <div className="text-xs font-mono text-gray-400 shrink-0">
+              <div className="text-xs font-mono text-slate-300 font-medium shrink-0">
                 {song.duration ? formatTime(song.duration) : '--:--'}
               </div>
             </button>
@@ -296,15 +298,15 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
       </div>
 
       {/* Floating Sticky Player Controls */}
-      <div className="sticky bottom-4 z-40 glass-panel rounded-3xl p-4 sm:p-5 shadow-2xl border border-white/15 backdrop-blur-2xl">
+      <div className="sticky bottom-4 z-40 glass-panel rounded-3xl p-4 sm:p-5 shadow-2xl border-2 border-slate-700/60 backdrop-blur-2xl bg-slate-950/95">
         {streamError && (
-          <p className="text-xs text-red-400 text-center mb-2">{streamError}</p>
+          <p className="text-xs text-red-300 font-semibold text-center mb-2">{streamError}</p>
         )}
 
         <div className="space-y-3">
           {/* Progress Seek Bar */}
           <div className="flex items-center gap-3">
-            <span className="text-[11px] font-mono text-gray-400 min-w-[36px] text-right">
+            <span className="text-xs font-mono text-slate-200 min-w-[38px] text-right font-semibold">
               {formatTime(currentTime)}
             </span>
             <input
@@ -313,9 +315,9 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
               max={duration || 100}
               value={currentTime}
               onChange={handleSeek}
-              className="flex-1 h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-brand-500"
+              className="flex-1 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
             />
-            <span className="text-[11px] font-mono text-gray-400 min-w-[36px]">
+            <span className="text-xs font-mono text-slate-200 min-w-[38px] font-semibold">
               {formatTime(duration)}
             </span>
           </div>
@@ -324,12 +326,12 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
           <div className="flex items-center justify-between gap-4 pt-1">
             {/* Active song info */}
             <div className="min-w-0 flex-1 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-brand-500/20 border border-brand-500/30 flex items-center justify-center shrink-0">
-                <Video className="w-5 h-5 text-brand-400" />
+              <div className="w-10 h-10 rounded-xl bg-indigo-600/25 border border-indigo-400/40 flex items-center justify-center shrink-0">
+                <Video className="w-5 h-5 text-indigo-300" />
               </div>
               <div className="min-w-0">
                 <p className="text-xs font-bold text-white truncate">{currentSong?.title || 'Select a track'}</p>
-                <p className="text-[11px] text-gray-400 truncate">{album.artist}</p>
+                <p className="text-[11px] text-slate-300 font-medium truncate">{album.artist}</p>
               </div>
             </div>
 
@@ -337,7 +339,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
             <div className="flex items-center gap-3 shrink-0">
               <button
                 onClick={handlePrev}
-                className="p-2 text-gray-400 hover:text-white transition-colors"
+                className="p-2 text-slate-300 hover:text-white transition-colors"
                 title="Previous Track"
               >
                 <SkipBack className="w-5 h-5" />
@@ -346,7 +348,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
               <button
                 onClick={togglePlayPause}
                 disabled={loadingStreamUrl}
-                className="w-12 h-12 rounded-full bg-gradient-to-r from-brand-500 to-accent-violet hover:opacity-95 text-white flex items-center justify-center shadow-lg shadow-brand-500/30 transition-transform active:scale-95 disabled:opacity-50"
+                className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 text-white flex items-center justify-center shadow-xl shadow-indigo-600/35 transition-transform active:scale-95 disabled:opacity-50 border border-white/20"
               >
                 {loadingStreamUrl ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
@@ -359,7 +361,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
 
               <button
                 onClick={handleNext}
-                className="p-2 text-gray-400 hover:text-white transition-colors"
+                className="p-2 text-slate-300 hover:text-white transition-colors"
                 title="Next Track"
               >
                 <SkipForward className="w-5 h-5" />
@@ -370,7 +372,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
             <div className="hidden sm:flex items-center gap-2 shrink-0">
               <button
                 onClick={() => setIsMuted(!isMuted)}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-slate-300 hover:text-white transition-colors"
               >
                 {isMuted || volume === 0 ? (
                   <VolumeX className="w-4 h-4 text-red-400" />
@@ -388,7 +390,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
                   setVolume(parseFloat(e.target.value));
                   setIsMuted(false);
                 }}
-                className="w-16 h-1 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-brand-500"
+                className="w-16 h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
               />
             </div>
           </div>

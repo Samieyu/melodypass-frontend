@@ -44,8 +44,8 @@ export default function AlbumPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4">
-        <Loader2 className="w-10 h-10 text-brand-400 animate-spin mb-4" />
-        <p className="text-sm font-medium text-gray-400">Verifying session & loading music video...</p>
+        <Loader2 className="w-10 h-10 text-indigo-400 animate-spin mb-4" />
+        <p className="text-sm font-semibold text-slate-200">Verifying session & loading music video...</p>
       </div>
     );
   }
@@ -53,25 +53,25 @@ export default function AlbumPage() {
   if (error || !album) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4">
-        <div className="w-full max-w-md glass-panel rounded-3xl p-6 sm:p-8 text-center border border-red-500/20 shadow-2xl">
-          <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 mx-auto mb-4">
+        <div className="w-full max-w-md glass-panel rounded-3xl p-6 sm:p-8 text-center border-2 border-red-500/30 shadow-2xl">
+          <div className="w-16 h-16 rounded-full bg-red-500/15 border-2 border-red-500/40 flex items-center justify-center text-red-300 mx-auto mb-4">
             <Lock className="w-8 h-8" />
           </div>
           <h1 className="text-xl font-bold text-white mb-2">Album Access Restricted</h1>
-          <p className="text-xs text-gray-300 mb-6">{error}</p>
+          <p className="text-sm text-slate-200 mb-6 font-medium leading-relaxed">{error}</p>
 
           <div className="space-y-3">
             <Link
               href="/access"
-              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-brand-600 to-accent-violet text-white font-bold text-sm block shadow-lg"
+              className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 text-white font-extrabold text-sm block shadow-xl shadow-indigo-600/30 hover:from-blue-500 hover:to-violet-500 transition-all border border-white/20"
             >
               Enter Access Code
             </Link>
             <button
               onClick={fetchAlbum}
-              className="w-full py-2.5 px-4 rounded-xl border border-white/10 text-gray-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-2"
+              className="w-full py-2.5 px-4 rounded-xl border border-slate-700 bg-slate-800/80 text-slate-200 hover:text-white hover:bg-slate-800 text-xs font-bold flex items-center justify-center gap-2 transition-colors"
             >
-              <RefreshCw className="w-3.5 h-3.5" />
+              <RefreshCw className="w-3.5 h-3.5 text-indigo-400" />
               <span>Retry Session</span>
             </button>
           </div>
@@ -85,9 +85,9 @@ export default function AlbumPage() {
       <div className="max-w-xl mx-auto mb-6">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-gray-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white transition-colors"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 text-indigo-400" />
           <span>Home</span>
         </Link>
       </div>
