@@ -191,7 +191,7 @@ export function AccessCodeForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Samuel Eyu"
-            className="w-full pl-10 pr-4 py-3 rounded-xl glass-input text-sm text-slate-900 dark:text-white placeholder-slate-400 font-medium"
+            className="w-full pl-10 pr-4 py-3.5 rounded-xl bg-slate-50 hover:bg-white focus:bg-white border-2 border-slate-200 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-500/15 dark:bg-slate-900/90 dark:border-slate-700 dark:text-white dark:focus:border-indigo-400 dark:focus:bg-slate-900 text-sm text-slate-900 placeholder-slate-400 font-medium transition-all outline-none shadow-sm"
           />
         </div>
       </div>
@@ -209,7 +209,7 @@ export function AccessCodeForm() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="0959828576"
-            className="w-full pl-10 pr-4 py-3 rounded-xl glass-input text-sm text-slate-900 dark:text-white placeholder-slate-400 font-medium"
+            className="w-full pl-10 pr-4 py-3.5 rounded-xl bg-slate-50 hover:bg-white focus:bg-white border-2 border-slate-200 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-500/15 dark:bg-slate-900/90 dark:border-slate-700 dark:text-white dark:focus:border-indigo-400 dark:focus:bg-slate-900 text-sm text-slate-900 placeholder-slate-400 font-medium transition-all outline-none shadow-sm"
           />
         </div>
       </div>
@@ -220,7 +220,7 @@ export function AccessCodeForm() {
           <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
             6-Character Access Code
           </label>
-          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Enter</span>
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Excludes 0/O, 1/I/L</span>
         </div>
         
         <div className="grid grid-cols-6 gap-2 sm:gap-3">
@@ -234,7 +234,7 @@ export function AccessCodeForm() {
               onChange={(e) => handleDigitChange(idx, e.target.value)}
               onKeyDown={(e) => handleKeyDown(idx, e)}
               onPaste={handlePaste}
-              className="w-full h-14 text-center text-2xl font-black font-mono tracking-wider rounded-xl bg-white border-2 border-slate-300 text-indigo-700 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500/25 dark:bg-slate-900/95 dark:border-slate-600 dark:text-indigo-300 dark:focus:border-indigo-400 dark:focus:bg-slate-900 dark:focus:ring-indigo-500/40 uppercase transition-all outline-none shadow-sm dark:shadow-md"
+              className="w-full h-14 text-center text-2xl font-black font-mono tracking-wider rounded-xl bg-slate-50 hover:bg-white focus:bg-white border-2 border-indigo-200/80 hover:border-indigo-400 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-500/20 text-indigo-900 dark:bg-slate-900/95 dark:border-slate-700 dark:hover:border-slate-500 dark:text-indigo-300 dark:focus:border-indigo-400 dark:focus:bg-slate-900 dark:focus:ring-indigo-500/40 uppercase transition-all outline-none shadow-sm"
             />
           ))}
         </div>

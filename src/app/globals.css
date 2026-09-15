@@ -21,13 +21,11 @@ body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Modern High-Legibility Glassmorphism */
+/* Modern High-Legibility Cards & Panels */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(203, 213, 225, 0.85);
-  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 4px 6px -2px rgba(15, 23, 42, 0.03);
 }
 
 .dark .glass-panel {
@@ -37,11 +35,9 @@ body {
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.05);
 }
 
 .dark .glass-card {
@@ -51,7 +47,7 @@ body {
 }
 
 .glass-input {
-  background: #ffffff;
+  background: #f8fafc;
   border: 1.5px solid #cbd5e1;
   color: #0f172a;
   transition: all 0.2s ease;
@@ -59,12 +55,13 @@ body {
 
 .glass-input:hover {
   border-color: #94a3b8;
+  background: #ffffff;
 }
 
 .glass-input:focus {
   border-color: #4f46e5;
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
   outline: none;
 }
 

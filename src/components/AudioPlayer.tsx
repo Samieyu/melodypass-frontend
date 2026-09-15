@@ -161,8 +161,8 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
   return (
     <div className="w-full max-w-xl mx-auto space-y-6">
       {/* Video / Cinema Player Screen - High Performance Hardware Accelerated */}
-      <div className="rounded-3xl p-3 sm:p-4 shadow-xl border border-slate-200 dark:border-white/15 bg-slate-900/90 dark:bg-slate-950 relative isolate">
-        <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black border border-white/10 shadow-lg isolate transform-gpu group">
+      <div className="rounded-3xl p-3 sm:p-4 shadow-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 relative isolate">
+        <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black border border-slate-200 dark:border-white/10 shadow-lg isolate transform-gpu group">
           {/* HTML5 Video Element - GPU Accelerated */}
           <video
             ref={mediaRef}
@@ -253,7 +253,7 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
       </div>
 
       {/* Track List */}
-      <div className="glass-panel rounded-3xl p-4 sm:p-6 space-y-2 border border-slate-200 dark:border-white/15">
+      <div className="rounded-3xl p-4 sm:p-6 space-y-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/90 shadow-xl">
         <h2 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-3 px-2">
           Video Tracklist
         </h2>
@@ -266,14 +266,14 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
               onClick={() => playTrack(idx)}
               className={`w-full p-3.5 rounded-2xl flex items-center gap-4 transition-all duration-200 text-left ${
                 isSelected
-                  ? 'bg-gradient-to-r from-indigo-50 via-indigo-100/70 to-white border-2 border-indigo-500 text-indigo-950 shadow-md dark:bg-gradient-to-r dark:from-indigo-950/90 dark:via-indigo-900/60 dark:to-slate-900/80 dark:border-indigo-400/60 dark:text-white dark:shadow-xl'
-                  : 'bg-white/80 border border-slate-200 hover:border-slate-400 hover:bg-slate-50 text-slate-800 dark:bg-slate-900/60 dark:border-slate-700/60 dark:hover:border-slate-500 dark:hover:bg-slate-800/80 dark:text-slate-200'
+                  ? 'bg-indigo-50 border-2 border-indigo-500 text-indigo-950 shadow-sm dark:bg-gradient-to-r dark:from-indigo-950/90 dark:via-indigo-900/60 dark:to-slate-900/80 dark:border-indigo-400/60 dark:text-white dark:shadow-xl'
+                  : 'bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 dark:bg-slate-900/60 dark:border-slate-700/60 dark:hover:border-slate-500 dark:hover:bg-slate-800/80 dark:text-slate-200'
               }`}
             >
               <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 font-bold text-xs font-mono ${
                 isSelected 
                   ? 'bg-indigo-100 text-indigo-700 border border-indigo-300 dark:bg-indigo-500/20 dark:text-cyan-300 dark:border-indigo-400/30' 
-                  : 'bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
+                  : 'bg-white text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
               }`}>
                 {isSelected && isPlaying ? (
                   <Loader2 className="w-4 h-4 text-indigo-600 dark:text-cyan-400 animate-spin" />
