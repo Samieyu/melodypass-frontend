@@ -190,7 +190,7 @@ export function AccessCodeForm() {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="John Doe"
+            placeholder="Samuel Eyu"
             className="w-full pl-10 pr-4 py-3 rounded-xl glass-input text-sm text-slate-900 dark:text-white placeholder-slate-400 font-medium"
           />
         </div>
@@ -208,7 +208,7 @@ export function AccessCodeForm() {
             required
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="+1 555 019 2831"
+            placeholder="0959828576"
             className="w-full pl-10 pr-4 py-3 rounded-xl glass-input text-sm text-slate-900 dark:text-white placeholder-slate-400 font-medium"
           />
         </div>

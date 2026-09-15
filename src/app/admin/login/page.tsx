@@ -73,7 +73,7 @@ export default function AdminLoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@melodypass.com"
+                  placeholder="name@gmail.com"
                   className="w-full pl-10 pr-4 py-3 rounded-xl glass-input text-sm text-white placeholder-gray-500"
                 />
               </div>
