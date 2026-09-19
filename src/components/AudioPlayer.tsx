@@ -138,14 +138,75 @@ export function AudioPlayer({ album }: AudioPlayerProps) {
     }
   };
 
-  const handleToggleFullscreen = () => {
-    if (!mediaRef.current) return;
-    if (document.fullscreenElement) {
-      document.exitFullscreen().catch(() => {});
-    } else {
-      if (mediaRef.current.requestFullscreen) {
-        mediaRef.current.requestFullscreen().catch(() => {});
+  // Listen to iOS WebKit native fullscreen events
+  useEffect(() => {
+    const video = mediaRef.current as any;
+    if (!video) return;
+
+    const handleBeginFs = () => {
+      setIsPlaying(true);
+    };
+
+    const handleEndFs = () => {
+      setIsPlaying(!video.paused);
+    };
+
+    video.addEventListener('webkitbeginfullscreen', handleBeginFs);
+    video.addEventListener('webkitendfullscreen', handleEndFs);
+
+    return () => {
+      video.removeEventListener('webkitbeginfullscreen', handleBeginFs);
+      video.removeEventListener('webkitendfullscreen', handleEndFs);
+    };
+  }, []);
+
+  const handleToggleFullscreen = async () => {
+    const video = mediaRef.current as any;
+    if (!video) return;
+
+    // If source isn't loaded yet, start track playback first
+    if (!video.src || video.src === window.location.href) {
+      await playTrack(currentTrackIndex);
+    }
+
+    // 1. Check Standard HTML5 Fullscreen (Android, PC, Mac Chrome/Edge)
+    const isStandardFs = !!(document.fullscreenElement || (document as any).webkitFullscreenElement);
+    if (isStandardFs) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      } else if ((document as any).webkitExitFullscreen) {
+        (document as any).webkitExitFullscreen();
       }
+      return;
+    }
+
+    // 2. Check iOS iPhone WebKit Fullscreen exit
+    if (video.webkitDisplayingFullscreen) {
+      if (typeof video.webkitExitFullscreen === 'function') {
+        video.webkitExitFullscreen();
+        return;
+      }
+    }
+
+    // 3. iPhone iOS WebKit Fullscreen API (iOS Safari only supports webkitEnterFullscreen)
+    if (typeof video.webkitEnterFullscreen === 'function') {
+      try {
+        video.webkitEnterFullscreen();
+        return;
+      } catch (err) {
+        console.warn('iOS webkitEnterFullscreen error:', err);
+      }
+    }
+
+    // 4. Standard HTML5 requestFullscreen (Android, PC, iPad, Mac)
+    if (typeof video.requestFullscreen === 'function') {
+      video.requestFullscreen().catch((err: any) => console.warn('requestFullscreen error:', err));
+    } else if (typeof video.webkitRequestFullscreen === 'function') {
+      video.webkitRequestFullscreen();
+    } else if (typeof video.mozRequestFullScreen === 'function') {
+      video.mozRequestFullScreen();
+    } else if (typeof video.msRequestFullscreen === 'function') {
+      video.msRequestFullscreen();
     }
   };
 
